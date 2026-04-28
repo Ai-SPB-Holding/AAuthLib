@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 keywords = ["oauth2", "oidc", "auth", "axum", "bff"]
 categories = ["authentication", "web-programming::http-client"]
-repository = "https://github.com/OWNER/AuthService.git"
+repository = "https://github.com/Ai-SPB-Holding/AAuthLib"
 
 [features]
 default = ["rustls-tls"]
