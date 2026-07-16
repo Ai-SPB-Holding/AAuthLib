@@ -89,9 +89,10 @@ See [`CONTRACTS.md`](CONTRACTS.md) for request/response fields aligned with the 
 cargo run -p authservice-sdk --example bff_auth_code --features axum
 cargo run -p authservice-sdk --example bff_embedded_session
 cargo run -p authservice-sdk --example client_credentials
+cargo run -p authservice-sdk --example service_user_admin
 ```
 
-Examples set dummy env vars and expect a reachable issuer only when you point `SERVER_METADATA_URL` at a real AuthService.
+Confidential clients with `users.read` / `users.write` / `users.delete` / `users.manage` scopes can manage tenant users via [`ServiceUserAdminClient`](src/user_admin.rs) (HTTP Basic or `client_credentials` bearer).
 
 ## Changelog
 

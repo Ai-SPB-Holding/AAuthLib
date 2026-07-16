@@ -152,8 +152,7 @@ impl OAuth2Client {
         Ok(PasswordGrantResult::Other(v))
     }
 
-    /// `grant_type=client_credentials` — **not supported** by current AuthService `/oauth2/token` (returns
-    /// `unsupported grant_type`). This method exists to get a clear [`SdkError::UnsupportedGrantType`].
+    /// `grant_type=client_credentials` for confidential machine clients (Mail Sync, user admin SDK, …).
     pub async fn client_credentials(
         &self,
         client: &ClientConfig,

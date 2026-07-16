@@ -1,6 +1,6 @@
 [package]
 name = "authservice-sdk"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "HTTP client and Axum helpers for AuthService OAuth2/OIDC APIs"
 license = "MIT"
@@ -44,3 +44,6 @@ name = "bff_embedded_session"
 
 [[example]]
 name = "client_credentials"
+
+[[example]]
+name = "service_user_admin"

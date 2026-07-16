@@ -24,6 +24,7 @@ pub mod error;
 pub mod oauth2;
 pub mod pkce;
 pub mod types;
+pub mod user_admin;
 
 #[cfg(feature = "axum")]
 pub mod axum;
@@ -34,6 +35,10 @@ pub use error::SdkError;
 pub use oauth2::OAuth2Client;
 pub use pkce::{build_authorize_url, PkceS256};
 pub use types::{IntrospectResponse, PasswordGrantResult, TokenSet};
+pub use user_admin::{
+    CreateServiceUserRequest, ListUsersParams, PatchServiceUserRequest, ServiceUser,
+    ServiceUserAdminClient,
+};
 
 #[cfg(feature = "axum")]
 pub use axum::{

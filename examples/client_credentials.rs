@@ -1,6 +1,6 @@
-//! Calls `grant_type=client_credentials`. AuthService currently rejects this grant — demonstrates [`authservice_sdk::SdkError::UnsupportedGrantType`].
+//! Calls `grant_type=client_credentials` (confidential clients only).
 
-use authservice_sdk::{Config, OAuth2Client, SdkError};
+use authservice_sdk::{Config, OAuth2Client};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -10,15 +10,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let http = reqwest::Client::builder().build()?;
     let oauth = OAuth2Client::from_config(http, &cfg);
 
-    let result = oauth
-        .client_credentials(&cfg.client, Some("read"), cfg.default_audience.as_deref())
-        .await;
+    let tokens = oauth
+        .client_credentials(&cfg.client, Some("users.read"), cfg.default_audience.as_deref())
+        .await?;
 
-    match result {
-        Ok(_) => println!("unexpected success"),
-        Err(SdkError::UnsupportedGrantType(msg)) => println!("Expected unsupported grant:\n{msg}"),
-        Err(e) => println!("Other error (e.g. connection): {e:?}"),
-    }
+    println!(
+        "access_token prefix: {}…",
+        &tokens.access_token[..tokens.access_token.len().min(24)]
+    );
+    println!("expires_in: {}", tokens.expires_in);
 
     Ok(())
 }
@@ -27,6 +27,9 @@ fn load_demo_env_if_missing() {
     use std::env;
     if env::var("CLIENT_ID").is_err() {
         env::set_var("CLIENT_ID", "demo-client");
+    }
+    if env::var("CLIENT_SECRET").is_err() {
+        env::set_var("CLIENT_SECRET", "demo-secret");
     }
     if env::var("REDIRECT_URL").is_err() {
         env::set_var("REDIRECT_URL", "http://127.0.0.1:8080/callback");
